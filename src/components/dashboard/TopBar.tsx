@@ -1,4 +1,4 @@
-import { Bell, ChevronDown, LogOut, Settings, User } from "lucide-react";
+import { Bell, ChevronDown, LogOut, Moon, Settings, Sun, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -9,6 +9,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Badge } from "@/components/ui/badge";
+import { useTheme } from "next-themes";
 
 interface TopBarProps {
   companyName: string;
@@ -25,6 +26,8 @@ export function TopBar({
   accountingPeriod,
   notificationCount,
 }: TopBarProps) {
+  const { theme, setTheme } = useTheme();
+
   return (
     <header className="glass-effect sticky top-0 z-50 border-b border-border/50 px-6 py-3">
       <div className="flex items-center justify-between">
@@ -56,6 +59,18 @@ export function TopBar({
 
         {/* Right Side Actions */}
         <div className="flex items-center gap-3">
+          {/* Theme Toggle */}
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+            className="relative"
+          >
+            <Sun className="h-5 w-5 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+            <Moon className="absolute h-5 w-5 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+            <span className="sr-only">تبديل الوضع</span>
+          </Button>
+
           {/* Notifications */}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
