@@ -1,4 +1,4 @@
-import { Bell, ChevronDown, LogOut, Moon, Settings, Sun, User } from "lucide-react";
+import { Bell, ChevronDown, Globe, LogOut, Moon, Settings, Sun, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Badge } from "@/components/ui/badge";
 import { useTheme } from "next-themes";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 interface TopBarProps {
   companyName: string;
@@ -27,6 +28,7 @@ export function TopBar({
   notificationCount,
 }: TopBarProps) {
   const { theme, setTheme } = useTheme();
+  const { language, setLanguage, t } = useLanguage();
 
   return (
     <header className="glass-effect sticky top-0 z-50 border-b border-border/50 px-6 py-3">
@@ -38,8 +40,8 @@ export function TopBar({
               <span className="text-primary-foreground font-bold text-lg">S</span>
             </div>
             <div>
-              <h1 className="text-lg font-bold gradient-text">نظام سيدا المحاسبي</h1>
-              <p className="text-xs text-muted-foreground">SIDA Accounting System</p>
+              <h1 className="text-lg font-bold gradient-text">{t("systemName")}</h1>
+              <p className="text-xs text-muted-foreground">{t("systemNameEn")}</p>
             </div>
           </div>
           
@@ -47,18 +49,31 @@ export function TopBar({
           
           <div>
             <p className="text-sm font-medium text-foreground">{companyName}</p>
-            <p className="text-xs text-muted-foreground">الشركة المسجلة</p>
+            <p className="text-xs text-muted-foreground">{t("registeredCompany")}</p>
           </div>
         </div>
 
         {/* Center - Accounting Period */}
         <div className="hidden md:flex items-center gap-2 px-4 py-2 rounded-lg bg-secondary/50 border border-border/50">
-          <span className="text-xs text-muted-foreground">الفترة المحاسبية:</span>
+          <span className="text-xs text-muted-foreground">{t("accountingPeriod")}:</span>
           <span className="text-sm font-medium text-primary">{accountingPeriod}</span>
         </div>
 
         {/* Right Side Actions */}
         <div className="flex items-center gap-3">
+          {/* Language Toggle */}
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={() => setLanguage(language === "ar" ? "en" : "ar")}
+            className="relative"
+          >
+            <Globe className="h-5 w-5" />
+            <span className="absolute -bottom-1 -right-1 text-[10px] font-bold bg-primary text-primary-foreground rounded px-1">
+              {language === "ar" ? "ع" : "E"}
+            </span>
+          </Button>
+
           {/* Theme Toggle */}
           <Button
             variant="ghost"
@@ -68,7 +83,7 @@ export function TopBar({
           >
             <Sun className="h-5 w-5 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
             <Moon className="absolute h-5 w-5 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-            <span className="sr-only">تبديل الوضع</span>
+            <span className="sr-only">{language === "ar" ? "تبديل الوضع" : "Toggle theme"}</span>
           </Button>
 
           {/* Notifications */}
@@ -84,15 +99,15 @@ export function TopBar({
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="w-80">
-              <DropdownMenuLabel>الإشعارات</DropdownMenuLabel>
+              <DropdownMenuLabel>{t("notifications")}</DropdownMenuLabel>
               <DropdownMenuSeparator />
               <DropdownMenuItem className="flex flex-col items-start gap-1 py-3">
-                <span className="text-sm font-medium">قيود غير مرحّلة</span>
-                <span className="text-xs text-muted-foreground">يوجد 5 قيود بانتظار الترحيل</span>
+                <span className="text-sm font-medium">{t("unpostedEntries")}</span>
+                <span className="text-xs text-muted-foreground">{t("unpostedEntriesDesc")}</span>
               </DropdownMenuItem>
               <DropdownMenuItem className="flex flex-col items-start gap-1 py-3">
-                <span className="text-sm font-medium">اقتراب إغلاق الفترة</span>
-                <span className="text-xs text-muted-foreground">متبقي 3 أيام على إغلاق الفترة الحالية</span>
+                <span className="text-sm font-medium">{t("periodClosing")}</span>
+                <span className="text-xs text-muted-foreground">{t("periodClosingDesc")}</span>
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
@@ -114,20 +129,20 @@ export function TopBar({
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="w-56">
-              <DropdownMenuLabel>حسابي</DropdownMenuLabel>
+              <DropdownMenuLabel>{t("myAccount")}</DropdownMenuLabel>
               <DropdownMenuSeparator />
               <DropdownMenuItem>
-                <User className="ml-2 h-4 w-4" />
-                الملف الشخصي
+                <User className="me-2 h-4 w-4" />
+                {t("profile")}
               </DropdownMenuItem>
               <DropdownMenuItem>
-                <Settings className="ml-2 h-4 w-4" />
-                الإعدادات
+                <Settings className="me-2 h-4 w-4" />
+                {t("settings")}
               </DropdownMenuItem>
               <DropdownMenuSeparator />
               <DropdownMenuItem className="text-destructive focus:text-destructive">
-                <LogOut className="ml-2 h-4 w-4" />
-                تسجيل الخروج
+                <LogOut className="me-2 h-4 w-4" />
+                {t("logout")}
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
