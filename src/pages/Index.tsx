@@ -23,7 +23,7 @@ const Index = () => {
       
       <Sidebar />
       
-      <main className="mr-64 p-6 transition-all duration-300">
+      <main className="mr-56 p-6 transition-all duration-300">
         {/* Page Header */}
         <div className="mb-8">
           <h2 className="text-2xl font-bold">لوحة التحكم</h2>
