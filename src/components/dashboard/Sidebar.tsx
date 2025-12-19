@@ -49,6 +49,13 @@ interface MenuSection {
 
 const menuSections: MenuSection[] = [
   {
+    title: "الملخص",
+    icon: LayoutDashboard,
+    items: [
+      { title: "لوحة التحكم", icon: LayoutDashboard, path: "/" },
+    ],
+  },
+  {
     title: "الحركات المحاسبية",
     icon: Receipt,
     items: [
@@ -111,7 +118,7 @@ const menuSections: MenuSection[] = [
 
 export function Sidebar() {
   const [collapsed, setCollapsed] = useState(false);
-  const [expandedSections, setExpandedSections] = useState<string[]>(["الحركات المحاسبية"]);
+  const [expandedSections, setExpandedSections] = useState<string[]>(["الملخص"]);
 
   const toggleSection = (title: string) => {
     setExpandedSections((prev) =>
@@ -138,21 +145,6 @@ export function Sidebar() {
             className={cn("h-4 w-4 transition-transform", collapsed && "rotate-180")}
           />
         </button>
-
-        {/* Dashboard Link */}
-        <div className="p-3 border-b border-sidebar-border">
-          <NavLink
-            to="/"
-            className={cn(
-              "flex items-center gap-3 px-3 py-2.5 rounded-lg text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground transition-all duration-200",
-              collapsed && "justify-center px-2"
-            )}
-            activeClassName="bg-sidebar-accent text-sidebar-primary"
-          >
-            <LayoutDashboard className="h-5 w-5 flex-shrink-0" />
-            {!collapsed && <span className="text-sm font-medium">لوحة التحكم</span>}
-          </NavLink>
-        </div>
 
         {/* Navigation Sections */}
         <nav className="flex-1 p-3 space-y-2 overflow-y-auto scrollbar-thin">
