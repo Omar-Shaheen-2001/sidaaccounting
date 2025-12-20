@@ -269,7 +269,7 @@ const JournalEntries = () => {
               {mockEntries.map((entry) => (
                 <Card key={entry.id} className="hover:shadow-md transition-shadow">
                   <CardContent className="p-4">
-                    <div className="flex items-center justify-between">
+                    <div className="flex items-center justify-between flex-row-reverse">
                       {/* Left side - Actions and Amount */}
                       <div className="flex items-center gap-4">
                         <DropdownMenu>
