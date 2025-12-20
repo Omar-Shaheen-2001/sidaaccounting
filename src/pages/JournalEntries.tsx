@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Card, CardContent } from "@/components/ui/card";
+import { Checkbox } from "@/components/ui/checkbox";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -90,7 +91,26 @@ const JournalEntries = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(20);
   const [showAdvancedSearch, setShowAdvancedSearch] = useState(false);
+  const [selectedEntries, setSelectedEntries] = useState<number[]>([]);
   const totalItems = 14067;
+
+  const handleSelectAll = (checked: boolean) => {
+    if (checked) {
+      setSelectedEntries(mockEntries.map(entry => entry.id));
+    } else {
+      setSelectedEntries([]);
+    }
+  };
+
+  const handleSelectEntry = (entryId: number, checked: boolean) => {
+    if (checked) {
+      setSelectedEntries(prev => [...prev, entryId]);
+    } else {
+      setSelectedEntries(prev => prev.filter(id => id !== entryId));
+    }
+  };
+
+  const isAllSelected = mockEntries.length > 0 && selectedEntries.length === mockEntries.length;
 
   return (
     <div className="min-h-screen bg-background">
@@ -300,15 +320,42 @@ const JournalEntries = () => {
                   </SelectContent>
                 </Select>
               </div>
-              <h3 className="text-lg font-semibold">النتائج</h3>
+              <div className="flex items-center gap-3">
+                <h3 className="text-lg font-semibold">النتائج</h3>
+                <div className="flex items-center gap-2">
+                  <Checkbox 
+                    id="selectAll"
+                    checked={isAllSelected}
+                    onCheckedChange={handleSelectAll}
+                  />
+                  <label htmlFor="selectAll" className="text-sm text-muted-foreground cursor-pointer">
+                    تحديد الكل
+                  </label>
+                </div>
+                {selectedEntries.length > 0 && (
+                  <span className="text-sm text-primary font-medium">
+                    ({selectedEntries.length} محدد)
+                  </span>
+                )}
+              </div>
             </div>
 
             {/* Entry Cards */}
             <div className="space-y-3">
               {mockEntries.map((entry) => (
-                <Card key={entry.id} className="hover:shadow-md transition-shadow">
+                <Card 
+                  key={entry.id} 
+                  className={`hover:shadow-md transition-shadow ${selectedEntries.includes(entry.id) ? 'ring-2 ring-primary' : ''}`}
+                >
                   <CardContent className="p-4">
                     <div className="flex items-center justify-between flex-row-reverse">
+                      {/* Checkbox */}
+                      <div className="flex items-center">
+                        <Checkbox 
+                          checked={selectedEntries.includes(entry.id)}
+                          onCheckedChange={(checked) => handleSelectEntry(entry.id, checked as boolean)}
+                        />
+                      </div>
                       {/* Left side - Actions and Amount */}
                       <div className="flex items-center gap-4">
                         <DropdownMenu>
