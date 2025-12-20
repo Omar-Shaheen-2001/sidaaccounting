@@ -5,6 +5,12 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Card, CardContent } from "@/components/ui/card";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { 
   Plus, 
   FileText, 
@@ -15,7 +21,10 @@ import {
   ArrowLeft,
   SlidersHorizontal,
   Building2,
-  User
+  User,
+  Pencil,
+  Trash2,
+  Eye
 } from "lucide-react";
 
 // Mock data for journal entries
@@ -263,9 +272,27 @@ const JournalEntries = () => {
                     <div className="flex items-center justify-between">
                       {/* Left side - Actions and Amount */}
                       <div className="flex items-center gap-4">
-                        <Button variant="ghost" size="icon" className="h-8 w-8">
-                          <MoreHorizontal className="h-4 w-4" />
-                        </Button>
+                        <DropdownMenu>
+                          <DropdownMenuTrigger asChild>
+                            <Button variant="ghost" size="icon" className="h-8 w-8">
+                              <MoreHorizontal className="h-4 w-4" />
+                            </Button>
+                          </DropdownMenuTrigger>
+                          <DropdownMenuContent align="start" className="bg-popover border border-border">
+                            <DropdownMenuItem className="gap-2 cursor-pointer">
+                              <Eye className="h-4 w-4" />
+                              عرض
+                            </DropdownMenuItem>
+                            <DropdownMenuItem className="gap-2 cursor-pointer">
+                              <Pencil className="h-4 w-4" />
+                              تعديل
+                            </DropdownMenuItem>
+                            <DropdownMenuItem className="gap-2 cursor-pointer text-destructive">
+                              <Trash2 className="h-4 w-4" />
+                              حذف
+                            </DropdownMenuItem>
+                          </DropdownMenuContent>
+                        </DropdownMenu>
                         <div className="flex items-center gap-1 text-primary font-bold">
                           <span>﷼</span>
                           <span>{entry.amount.toLocaleString()}</span>
