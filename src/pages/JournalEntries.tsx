@@ -89,6 +89,7 @@ const mockEntries = [
 const JournalEntries = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(20);
+  const [showAdvancedSearch, setShowAdvancedSearch] = useState(false);
   const totalItems = 14067;
 
   return (
@@ -152,7 +153,12 @@ const JournalEntries = () => {
             <CardContent className="p-6">
               <div className="flex justify-between items-center mb-4">
                 <div className="flex items-center gap-2">
-                  <Button variant="outline" size="sm" className="gap-2 bg-background">
+                  <Button 
+                    variant={showAdvancedSearch ? "default" : "outline"} 
+                    size="sm" 
+                    className="gap-2"
+                    onClick={() => setShowAdvancedSearch(!showAdvancedSearch)}
+                  >
                     <SlidersHorizontal className="h-4 w-4" />
                     بحث متقدم
                   </Button>
@@ -236,6 +242,39 @@ const JournalEntries = () => {
                   </Select>
                 </div>
               </div>
+
+              {/* Advanced Search Filters */}
+              {showAdvancedSearch && (
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4 p-4 bg-muted/30 rounded-lg border border-border">
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium text-right block">المبلغ أكبر من</label>
+                    <Input type="number" placeholder="" className="bg-background" />
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium text-right block">المبلغ أقل من</label>
+                    <Input type="number" placeholder="" className="bg-background" />
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium text-right block">تاريخ الإنشاء</label>
+                    <div className="flex items-center gap-2">
+                      <Input type="text" placeholder="إلى" className="bg-background" />
+                      <span className="text-muted-foreground">-</span>
+                      <Input type="text" placeholder="من" className="bg-background" />
+                      <Select defaultValue="custom">
+                        <SelectTrigger className="w-24 bg-background">
+                          <SelectValue placeholder="تخصيص" />
+                        </SelectTrigger>
+                        <SelectContent className="bg-popover border border-border">
+                          <SelectItem value="custom">تخصيص</SelectItem>
+                          <SelectItem value="today">اليوم</SelectItem>
+                          <SelectItem value="week">هذا الأسبوع</SelectItem>
+                          <SelectItem value="month">هذا الشهر</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                  </div>
+                </div>
+              )}
 
               {/* Action Buttons */}
               <div className="flex gap-2 justify-start">
