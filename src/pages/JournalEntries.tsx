@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { TopBar } from "@/components/dashboard/TopBar";
 import { Sidebar } from "@/components/dashboard/Sidebar";
 import { Button } from "@/components/ui/button";
@@ -88,6 +89,7 @@ const mockEntries = [
 ];
 
 const JournalEntries = () => {
+  const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(20);
   const [showAdvancedSearch, setShowAdvancedSearch] = useState(false);
@@ -128,7 +130,10 @@ const JournalEntries = () => {
         {/* Top Action Bar */}
         <div className="bg-muted/30 border-b border-border px-6 py-3 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <Button className="bg-primary hover:bg-primary/90 text-primary-foreground gap-2">
+            <Button 
+              className="bg-primary hover:bg-primary/90 text-primary-foreground gap-2"
+              onClick={() => navigate("/journal-entries/add")}
+            >
               <Plus className="h-4 w-4" />
               أضف قيد
             </Button>
