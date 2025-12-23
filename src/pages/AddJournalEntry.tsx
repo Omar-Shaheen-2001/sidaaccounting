@@ -32,7 +32,7 @@ const AddJournalEntry = () => {
   const navigate = useNavigate();
   const [journalDate, setJournalDate] = useState(new Date().toISOString().split('T')[0].split('-').reverse().join('/'));
   const [currency, setCurrency] = useState("SAR");
-  const [journalNumber] = useState("49068");
+  const [journalNumber, setJournalNumber] = useState("49068");
   const [description, setDescription] = useState("");
   const [lines, setLines] = useState<JournalLine[]>([
     { id: 1, accountName: "", description: "", costCenter: "", tax: "", debit: "", credit: "" },
@@ -176,8 +176,8 @@ const AddJournalEntry = () => {
                       <Input 
                         type="text" 
                         value={journalNumber}
-                        readOnly
-                        className="bg-muted/50 text-right"
+                        onChange={(e) => setJournalNumber(e.target.value)}
+                        className="bg-background text-right"
                       />
                     </div>
                   </div>
