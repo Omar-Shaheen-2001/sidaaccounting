@@ -299,49 +299,49 @@ const EditLog = () => {
                 <Table>
                   <TableHeader>
                     <TableRow className="bg-muted/50">
-                      <TableHead className="text-right font-semibold">تاريخ القيد</TableHead>
-                      <TableHead className="text-right font-semibold">دائن محلي</TableHead>
-                      <TableHead className="text-right font-semibold">مدين محلي</TableHead>
-                      <TableHead className="text-right font-semibold">دائن</TableHead>
-                      <TableHead className="text-right font-semibold">مدين</TableHead>
-                      <TableHead className="text-right font-semibold">العملة</TableHead>
-                      <TableHead className="text-right font-semibold">الوصف</TableHead>
-                      <TableHead className="text-right font-semibold">الاسم</TableHead>
-                      <TableHead className="text-right font-semibold">رقم القيد</TableHead>
-                      <TableHead className="text-right font-semibold">الموظف</TableHead>
-                      <TableHead className="text-right font-semibold">الإجراء</TableHead>
                       <TableHead className="text-right font-semibold">التاريخ</TableHead>
+                      <TableHead className="text-right font-semibold">الإجراء</TableHead>
+                      <TableHead className="text-right font-semibold">الموظف</TableHead>
+                      <TableHead className="text-right font-semibold">رقم القيد</TableHead>
+                      <TableHead className="text-right font-semibold">الاسم</TableHead>
+                      <TableHead className="text-right font-semibold">الوصف</TableHead>
+                      <TableHead className="text-right font-semibold">العملة</TableHead>
+                      <TableHead className="text-right font-semibold">مدين</TableHead>
+                      <TableHead className="text-right font-semibold">دائن</TableHead>
+                      <TableHead className="text-right font-semibold">مدين محلي</TableHead>
+                      <TableHead className="text-right font-semibold">دائن محلي</TableHead>
+                      <TableHead className="text-right font-semibold">تاريخ القيد</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
                     {mockEditLogEntries.map((entry) => (
                       <TableRow key={entry.id} className="hover:bg-muted/30">
-                        <TableCell className="text-right">{entry.journalDate}</TableCell>
-                        <TableCell className="text-right font-mono">
-                          {entry.localCredit.toLocaleString()}
-                        </TableCell>
-                        <TableCell className="text-right font-mono">
-                          {entry.localDebit.toLocaleString()}
-                        </TableCell>
-                        <TableCell className="text-right font-mono">
-                          {entry.credit.toLocaleString()}
-                        </TableCell>
-                        <TableCell className="text-right font-mono">
-                          {entry.debit.toLocaleString()}
-                        </TableCell>
-                        <TableCell className="text-right">{entry.currency}</TableCell>
-                        <TableCell className="text-right max-w-xs truncate" title={entry.description}>
-                          {entry.description}
-                        </TableCell>
-                        <TableCell className="text-right">{entry.accountName}</TableCell>
-                        <TableCell className="text-right font-mono">{entry.journalNumber}</TableCell>
-                        <TableCell className="text-right">{entry.employee}</TableCell>
+                        <TableCell className="text-right whitespace-nowrap">{entry.date}</TableCell>
                         <TableCell className="text-right">
                           <span className={`px-2 py-1 rounded text-sm ${getProcedureStyle(entry.procedure)}`}>
                             {entry.procedure}
                           </span>
                         </TableCell>
-                        <TableCell className="text-right whitespace-nowrap">{entry.date}</TableCell>
+                        <TableCell className="text-right">{entry.employee}</TableCell>
+                        <TableCell className="text-right font-mono">{entry.journalNumber}</TableCell>
+                        <TableCell className="text-right">{entry.accountName}</TableCell>
+                        <TableCell className="text-right max-w-xs truncate" title={entry.description}>
+                          {entry.description}
+                        </TableCell>
+                        <TableCell className="text-right">{entry.currency}</TableCell>
+                        <TableCell className="text-right font-mono">
+                          {entry.debit.toLocaleString()}
+                        </TableCell>
+                        <TableCell className="text-right font-mono">
+                          {entry.credit.toLocaleString()}
+                        </TableCell>
+                        <TableCell className="text-right font-mono">
+                          {entry.localDebit.toLocaleString()}
+                        </TableCell>
+                        <TableCell className="text-right font-mono">
+                          {entry.localCredit.toLocaleString()}
+                        </TableCell>
+                        <TableCell className="text-right">{entry.journalDate}</TableCell>
                       </TableRow>
                     ))}
                   </TableBody>
