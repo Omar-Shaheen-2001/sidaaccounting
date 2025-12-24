@@ -137,7 +137,11 @@ const JournalEntries = () => {
               <Plus className="h-4 w-4" />
               أضف قيد
             </Button>
-            <Button variant="outline" className="gap-2 bg-background">
+            <Button 
+              variant="outline" 
+              className="gap-2 bg-background"
+              onClick={() => navigate("/journal-entries/edit-log")}
+            >
               <FileText className="h-4 w-4" />
               سجل التعديلات
             </Button>
