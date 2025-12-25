@@ -56,6 +56,7 @@ const AddJournalEntry = () => {
     { id: 1, accountName: "", description: "", costCenter: "", tax: "", debit: "", credit: "" },
     { id: 2, accountName: "", description: "", costCenter: "", tax: "", debit: "", credit: "" },
   ]);
+  const [draggedIndex, setDraggedIndex] = useState<number | null>(null);
 
   const handleAddLine = () => {
     const newId = Math.max(...lines.map(l => l.id)) + 1;
@@ -80,6 +81,26 @@ const AddJournalEntry = () => {
     setLines(lines.map(line => 
       line.id === id ? { ...line, [field]: value } : line
     ));
+  };
+
+  const handleDragStart = (index: number) => {
+    setDraggedIndex(index);
+  };
+
+  const handleDragOver = (e: React.DragEvent, index: number) => {
+    e.preventDefault();
+    if (draggedIndex === null || draggedIndex === index) return;
+    
+    const newLines = [...lines];
+    const draggedItem = newLines[draggedIndex];
+    newLines.splice(draggedIndex, 1);
+    newLines.splice(index, 0, draggedItem);
+    setLines(newLines);
+    setDraggedIndex(index);
+  };
+
+  const handleDragEnd = () => {
+    setDraggedIndex(null);
   };
 
   const totalDebit = lines.reduce((sum, line) => sum + (Number(line.debit) || 0), 0);
@@ -244,12 +265,18 @@ const AddJournalEntry = () => {
                 <div className="text-right text-destructive">دائن *</div>
               </div>
 
-              {/* Table Body */}
               <div className="divide-y divide-border">
                 {lines.map((line, index) => (
                   <div 
                     key={line.id} 
-                    className="grid grid-cols-[40px_40px_1fr_1fr_150px_150px_120px_120px] gap-2 px-4 py-2 items-center hover:bg-muted/30 transition-colors"
+                    className={cn(
+                      "grid grid-cols-[40px_40px_1fr_1fr_150px_150px_120px_120px] gap-2 px-4 py-2 items-center hover:bg-muted/30 transition-colors",
+                      draggedIndex === index && "bg-muted/50 opacity-70"
+                    )}
+                    draggable
+                    onDragStart={() => handleDragStart(index)}
+                    onDragOver={(e) => handleDragOver(e, index)}
+                    onDragEnd={handleDragEnd}
                   >
                     {/* Checkbox */}
                     <div className="flex justify-center">
@@ -257,8 +284,8 @@ const AddJournalEntry = () => {
                     </div>
 
                     {/* Drag Handle */}
-                    <div className="flex justify-center cursor-grab">
-                      <GripVertical className="h-4 w-4 text-muted-foreground" />
+                    <div className="flex justify-center cursor-grab active:cursor-grabbing">
+                      <GripVertical className="h-4 w-4 text-muted-foreground hover:text-foreground transition-colors" />
                     </div>
 
                     {/* Account Name - Searchable Combobox */}
