@@ -8,6 +8,9 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Card, CardContent } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@/components/ui/command";
+import { cn } from "@/lib/utils";
 import { 
   Save, 
   X, 
@@ -15,8 +18,23 @@ import {
   Upload, 
   GripVertical,
   Trash2,
-  Plus
+  Plus,
+  Check,
+  ChevronsUpDown
 } from "lucide-react";
+
+const accounts = [
+  { value: "cash", label: "الخزينة الرئيسية" },
+  { value: "bank", label: "البنك" },
+  { value: "clients", label: "العملاء" },
+  { value: "suppliers", label: "الموردون" },
+  { value: "expenses", label: "المصروفات" },
+  { value: "revenue", label: "الإيرادات" },
+  { value: "inventory", label: "المخزون" },
+  { value: "fixed-assets", label: "الأصول الثابتة" },
+  { value: "payables", label: "الذمم الدائنة" },
+  { value: "receivables", label: "الذمم المدينة" },
+];
 
 interface JournalLine {
   id: number;
@@ -243,24 +261,50 @@ const AddJournalEntry = () => {
                       <GripVertical className="h-4 w-4 text-muted-foreground" />
                     </div>
 
-                    {/* Account Name */}
+                    {/* Account Name - Searchable Combobox */}
                     <div>
-                      <Select 
-                        value={line.accountName} 
-                        onValueChange={(value) => handleLineChange(line.id, 'accountName', value)}
-                      >
-                        <SelectTrigger className="bg-background h-9">
-                          <SelectValue placeholder="الحساب الافتراضي" />
-                        </SelectTrigger>
-                        <SelectContent className="bg-popover border border-border">
-                          <SelectItem value="cash">الخزينة الرئيسية</SelectItem>
-                          <SelectItem value="bank">البنك</SelectItem>
-                          <SelectItem value="clients">العملاء</SelectItem>
-                          <SelectItem value="suppliers">الموردون</SelectItem>
-                          <SelectItem value="expenses">المصروفات</SelectItem>
-                          <SelectItem value="revenue">الإيرادات</SelectItem>
-                        </SelectContent>
-                      </Select>
+                      <Popover>
+                        <PopoverTrigger asChild>
+                          <Button
+                            variant="outline"
+                            role="combobox"
+                            className={cn(
+                              "w-full justify-between bg-background h-9 font-normal",
+                              !line.accountName && "text-muted-foreground"
+                            )}
+                          >
+                            {line.accountName
+                              ? accounts.find((account) => account.value === line.accountName)?.label
+                              : "الحساب الافتراضي"}
+                            <ChevronsUpDown className="mr-2 h-4 w-4 shrink-0 opacity-50" />
+                          </Button>
+                        </PopoverTrigger>
+                        <PopoverContent className="w-[300px] p-0 bg-popover border border-border z-50" align="start">
+                          <Command>
+                            <CommandInput placeholder="ابحث عن حساب..." className="h-9" />
+                            <CommandList>
+                              <CommandEmpty>لا توجد نتائج</CommandEmpty>
+                              <CommandGroup>
+                                {accounts.map((account) => (
+                                  <CommandItem
+                                    key={account.value}
+                                    value={account.label}
+                                    onSelect={() => handleLineChange(line.id, 'accountName', account.value)}
+                                  >
+                                    {account.label}
+                                    <Check
+                                      className={cn(
+                                        "mr-auto h-4 w-4",
+                                        line.accountName === account.value ? "opacity-100" : "opacity-0"
+                                      )}
+                                    />
+                                  </CommandItem>
+                                ))}
+                              </CommandGroup>
+                            </CommandList>
+                          </Command>
+                        </PopoverContent>
+                      </Popover>
                     </div>
 
                     {/* Description */}
