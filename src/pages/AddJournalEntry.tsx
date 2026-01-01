@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { format } from "date-fns";
+import { ar } from "date-fns/locale";
 import { TopBar } from "@/components/dashboard/TopBar";
 import { Sidebar } from "@/components/dashboard/Sidebar";
 import { Button } from "@/components/ui/button";
@@ -10,6 +12,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@/components/ui/command";
+import { Calendar } from "@/components/ui/calendar";
 import { cn } from "@/lib/utils";
 import { 
   Save, 
@@ -20,7 +23,8 @@ import {
   Trash2,
   Plus,
   Check,
-  ChevronsUpDown
+  ChevronsUpDown,
+  CalendarIcon
 } from "lucide-react";
 
 const accounts = [
@@ -48,7 +52,7 @@ interface JournalLine {
 
 const AddJournalEntry = () => {
   const navigate = useNavigate();
-  const [journalDate, setJournalDate] = useState(new Date().toISOString().split('T')[0].split('-').reverse().join('/'));
+  const [journalDate, setJournalDate] = useState<Date>(new Date());
   const [currency, setCurrency] = useState("SAR");
   const [journalNumber, setJournalNumber] = useState("49068");
   const [description, setDescription] = useState("");
@@ -183,13 +187,29 @@ const AddJournalEntry = () => {
                   <div className="grid grid-cols-2 gap-4">
                     <div className="space-y-2">
                       <label className="text-sm font-medium text-right block">التاريخ</label>
-                      <Input 
-                        type="text" 
-                        value={journalDate}
-                        onChange={(e) => setJournalDate(e.target.value)}
-                        className="bg-background text-right"
-                        placeholder="23/12/2025"
-                      />
+                      <Popover>
+                        <PopoverTrigger asChild>
+                          <Button
+                            variant="outline"
+                            className={cn(
+                              "w-full justify-start text-right font-normal bg-background",
+                              !journalDate && "text-muted-foreground"
+                            )}
+                          >
+                            <CalendarIcon className="ml-2 h-4 w-4" />
+                            {journalDate ? format(journalDate, "dd/MM/yyyy", { locale: ar }) : <span>اختر التاريخ</span>}
+                          </Button>
+                        </PopoverTrigger>
+                        <PopoverContent className="w-auto p-0" align="start">
+                          <Calendar
+                            mode="single"
+                            selected={journalDate}
+                            onSelect={(date) => date && setJournalDate(date)}
+                            initialFocus
+                            className="pointer-events-auto"
+                          />
+                        </PopoverContent>
+                      </Popover>
                     </div>
                   </div>
                   
