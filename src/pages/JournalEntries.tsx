@@ -128,7 +128,7 @@ const JournalEntries = () => {
       
       <main className="mr-56 transition-all duration-300">
         {/* Top Action Bar */}
-        <div className="bg-muted/30 border-b border-border px-6 py-3 flex items-center justify-between">
+        <div className="sticky top-0 z-40 bg-muted/30 border-b border-border px-6 py-3 flex items-center justify-between backdrop-blur-sm">
           <div className="flex items-center gap-3">
             <Button 
               className="bg-primary hover:bg-primary/90 text-primary-foreground gap-2"
