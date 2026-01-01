@@ -82,6 +82,26 @@ const AddJournalEntry = () => {
   };
 
   const handleLineChange = (id: number, field: keyof JournalLine, value: string | number) => {
+    // Validate: prevent negative or zero values for debit/credit
+    if (field === 'debit' || field === 'credit') {
+      const numValue = Number(value);
+      if (value !== '' && numValue < 0) return; // Prevent negative values
+      
+      // Clear the other field when one is filled
+      setLines(lines.map(line => {
+        if (line.id === id) {
+          if (field === 'debit' && value !== '') {
+            return { ...line, debit: value, credit: '' };
+          } else if (field === 'credit' && value !== '') {
+            return { ...line, credit: value, debit: '' };
+          }
+          return { ...line, [field]: value };
+        }
+        return line;
+      }));
+      return;
+    }
+    
     setLines(lines.map(line => 
       line.id === id ? { ...line, [field]: value } : line
     ));
@@ -402,11 +422,17 @@ const AddJournalEntry = () => {
                     <div>
                       <Input 
                         type="number"
+                        min="0.01"
+                        step="0.01"
                         value={line.debit}
                         onChange={(e) => handleLineChange(line.id, 'debit', e.target.value)}
-                        className="bg-background h-9 text-left"
+                        className={cn(
+                          "bg-background h-9 text-left",
+                          line.credit && "opacity-50 cursor-not-allowed"
+                        )}
                         placeholder="مدين"
                         dir="ltr"
+                        disabled={!!line.credit}
                       />
                     </div>
 
@@ -414,9 +440,14 @@ const AddJournalEntry = () => {
                     <div className="flex items-center gap-1">
                       <Input 
                         type="number"
+                        min="0.01"
+                        step="0.01"
                         value={line.credit}
                         onChange={(e) => handleLineChange(line.id, 'credit', e.target.value)}
-                        className="bg-background h-9 text-left"
+                        className={cn(
+                          "bg-background h-9 text-left",
+                          line.debit && "opacity-50 cursor-not-allowed"
+                        )}
                         placeholder="دائن"
                         dir="ltr"
                       />
