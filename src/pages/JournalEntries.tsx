@@ -383,6 +383,10 @@ const JournalEntries = () => {
                               <Pencil className="h-4 w-4" />
                               تعديل
                             </DropdownMenuItem>
+                            <DropdownMenuItem className="gap-2 cursor-pointer">
+                              <ArrowLeft className="h-4 w-4" />
+                              الانتقال للمصدر
+                            </DropdownMenuItem>
                             <DropdownMenuItem className="gap-2 cursor-pointer text-destructive">
                               <Trash2 className="h-4 w-4" />
                               حذف
