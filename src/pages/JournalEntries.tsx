@@ -94,6 +94,8 @@ const JournalEntries = () => {
   const [itemsPerPage] = useState(20);
   const [showAdvancedSearch, setShowAdvancedSearch] = useState(false);
   const [selectedEntries, setSelectedEntries] = useState<number[]>([]);
+  const [dateFilterType, setDateFilterType] = useState("custom");
+  const [createdDateFilterType, setCreatedDateFilterType] = useState("custom");
   const totalItems = 14067;
 
   const handleSelectAll = (checked: boolean) => {
@@ -219,10 +221,20 @@ const JournalEntries = () => {
                 <div className="space-y-2">
                   <label className="text-sm font-medium text-right block">التاريخ</label>
                   <div className="flex items-center gap-2">
-                    <Input type="text" placeholder="إلى" className="bg-background" />
+                    <Input 
+                      type="text" 
+                      placeholder="إلى" 
+                      className="bg-background" 
+                      disabled={dateFilterType !== "custom"}
+                    />
                     <span className="text-muted-foreground">-</span>
-                    <Input type="text" placeholder="من" className="bg-background" />
-                    <Select defaultValue="custom">
+                    <Input 
+                      type="text" 
+                      placeholder="من" 
+                      className="bg-background" 
+                      disabled={dateFilterType !== "custom"}
+                    />
+                    <Select value={dateFilterType} onValueChange={setDateFilterType}>
                       <SelectTrigger className="w-24 bg-background">
                         <SelectValue placeholder="تخصيص" />
                       </SelectTrigger>
@@ -287,10 +299,20 @@ const JournalEntries = () => {
                   <div className="space-y-2">
                     <label className="text-sm font-medium text-right block">تاريخ الإنشاء</label>
                     <div className="flex items-center gap-2">
-                      <Input type="text" placeholder="إلى" className="bg-background" />
+                      <Input 
+                        type="text" 
+                        placeholder="إلى" 
+                        className="bg-background" 
+                        disabled={createdDateFilterType !== "custom"}
+                      />
                       <span className="text-muted-foreground">-</span>
-                      <Input type="text" placeholder="من" className="bg-background" />
-                      <Select defaultValue="custom">
+                      <Input 
+                        type="text" 
+                        placeholder="من" 
+                        className="bg-background" 
+                        disabled={createdDateFilterType !== "custom"}
+                      />
+                      <Select value={createdDateFilterType} onValueChange={setCreatedDateFilterType}>
                         <SelectTrigger className="w-24 bg-background">
                           <SelectValue placeholder="تخصيص" />
                         </SelectTrigger>
