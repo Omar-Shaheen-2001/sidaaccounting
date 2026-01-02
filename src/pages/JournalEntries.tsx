@@ -319,14 +319,14 @@ const JournalEntries = () => {
             <div className="flex justify-between items-center">
               <div className="flex items-center gap-2">
                 <span className="text-sm text-muted-foreground">الترتيب حسب</span>
-                <Select defaultValue="date">
-                  <SelectTrigger className="w-32 h-8 bg-background">
+                <Select defaultValue="createdAt">
+                  <SelectTrigger className="w-36 h-8 bg-background">
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent className="bg-popover border border-border">
-                    <SelectItem value="date">التاريخ</SelectItem>
-                    <SelectItem value="amount">المبلغ</SelectItem>
-                    <SelectItem value="id">الرقم</SelectItem>
+                    <SelectItem value="createdAt">تاريخ الإنشاء</SelectItem>
+                    <SelectItem value="journalDate">تاريخ القيد</SelectItem>
+                    <SelectItem value="journalNumber">رقم القيد</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
