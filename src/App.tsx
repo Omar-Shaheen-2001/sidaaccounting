@@ -9,6 +9,7 @@ import Index from "./pages/Index";
 import JournalEntries from "./pages/JournalEntries";
 import AddJournalEntry from "./pages/AddJournalEntry";
 import EditLog from "./pages/EditLog";
+import PaymentVoucher from "./pages/PaymentVoucher";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -26,6 +27,7 @@ const App = () => (
               <Route path="/journal-entries" element={<JournalEntries />} />
               <Route path="/journal-entries/add" element={<AddJournalEntry />} />
               <Route path="/journal-entries/edit-log" element={<EditLog />} />
+              <Route path="/payment-voucher" element={<PaymentVoucher />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>
