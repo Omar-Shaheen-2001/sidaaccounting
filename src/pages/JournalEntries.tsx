@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { format } from "date-fns";
+import { ar } from "date-fns/locale";
 import { TopBar } from "@/components/dashboard/TopBar";
 import { Sidebar } from "@/components/dashboard/Sidebar";
 import { Button } from "@/components/ui/button";
@@ -7,6 +9,8 @@ import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Card, CardContent } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
+import { Calendar } from "@/components/ui/calendar";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -26,8 +30,10 @@ import {
   User,
   Pencil,
   Trash2,
-  Eye
+  Eye,
+  CalendarIcon
 } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 // Mock data for journal entries
 const mockEntries = [
@@ -96,6 +102,10 @@ const JournalEntries = () => {
   const [selectedEntries, setSelectedEntries] = useState<number[]>([]);
   const [dateFilterType, setDateFilterType] = useState("custom");
   const [createdDateFilterType, setCreatedDateFilterType] = useState("custom");
+  const [dateFrom, setDateFrom] = useState<Date | undefined>(undefined);
+  const [dateTo, setDateTo] = useState<Date | undefined>(undefined);
+  const [createdDateFrom, setCreatedDateFrom] = useState<Date | undefined>(undefined);
+  const [createdDateTo, setCreatedDateTo] = useState<Date | undefined>(undefined);
   const totalItems = 14067;
 
   const handleSelectAll = (checked: boolean) => {
@@ -221,19 +231,55 @@ const JournalEntries = () => {
                 <div className="space-y-2">
                   <label className="text-sm font-medium text-right block">التاريخ</label>
                   <div className="flex items-center gap-2">
-                    <Input 
-                      type="text" 
-                      placeholder="إلى" 
-                      className="bg-background" 
-                      disabled={dateFilterType !== "custom"}
-                    />
+                    <Popover>
+                      <PopoverTrigger asChild>
+                        <Button
+                          variant="outline"
+                          className={cn(
+                            "justify-start text-right font-normal bg-background",
+                            !dateTo && "text-muted-foreground"
+                          )}
+                          disabled={dateFilterType !== "custom"}
+                        >
+                          <CalendarIcon className="ml-2 h-4 w-4" />
+                          {dateTo ? format(dateTo, "dd/MM/yyyy", { locale: ar }) : "إلى"}
+                        </Button>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-auto p-0" align="start">
+                        <Calendar
+                          mode="single"
+                          selected={dateTo}
+                          onSelect={setDateTo}
+                          initialFocus
+                          className="pointer-events-auto"
+                        />
+                      </PopoverContent>
+                    </Popover>
                     <span className="text-muted-foreground">-</span>
-                    <Input 
-                      type="text" 
-                      placeholder="من" 
-                      className="bg-background" 
-                      disabled={dateFilterType !== "custom"}
-                    />
+                    <Popover>
+                      <PopoverTrigger asChild>
+                        <Button
+                          variant="outline"
+                          className={cn(
+                            "justify-start text-right font-normal bg-background",
+                            !dateFrom && "text-muted-foreground"
+                          )}
+                          disabled={dateFilterType !== "custom"}
+                        >
+                          <CalendarIcon className="ml-2 h-4 w-4" />
+                          {dateFrom ? format(dateFrom, "dd/MM/yyyy", { locale: ar }) : "من"}
+                        </Button>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-auto p-0" align="start">
+                        <Calendar
+                          mode="single"
+                          selected={dateFrom}
+                          onSelect={setDateFrom}
+                          initialFocus
+                          className="pointer-events-auto"
+                        />
+                      </PopoverContent>
+                    </Popover>
                     <Select value={dateFilterType} onValueChange={setDateFilterType}>
                       <SelectTrigger className="w-24 bg-background">
                         <SelectValue placeholder="تخصيص" />
@@ -299,19 +345,55 @@ const JournalEntries = () => {
                   <div className="space-y-2">
                     <label className="text-sm font-medium text-right block">تاريخ الإنشاء</label>
                     <div className="flex items-center gap-2">
-                      <Input 
-                        type="text" 
-                        placeholder="إلى" 
-                        className="bg-background" 
-                        disabled={createdDateFilterType !== "custom"}
-                      />
+                      <Popover>
+                        <PopoverTrigger asChild>
+                          <Button
+                            variant="outline"
+                            className={cn(
+                              "justify-start text-right font-normal bg-background",
+                              !createdDateTo && "text-muted-foreground"
+                            )}
+                            disabled={createdDateFilterType !== "custom"}
+                          >
+                            <CalendarIcon className="ml-2 h-4 w-4" />
+                            {createdDateTo ? format(createdDateTo, "dd/MM/yyyy", { locale: ar }) : "إلى"}
+                          </Button>
+                        </PopoverTrigger>
+                        <PopoverContent className="w-auto p-0" align="start">
+                          <Calendar
+                            mode="single"
+                            selected={createdDateTo}
+                            onSelect={setCreatedDateTo}
+                            initialFocus
+                            className="pointer-events-auto"
+                          />
+                        </PopoverContent>
+                      </Popover>
                       <span className="text-muted-foreground">-</span>
-                      <Input 
-                        type="text" 
-                        placeholder="من" 
-                        className="bg-background" 
-                        disabled={createdDateFilterType !== "custom"}
-                      />
+                      <Popover>
+                        <PopoverTrigger asChild>
+                          <Button
+                            variant="outline"
+                            className={cn(
+                              "justify-start text-right font-normal bg-background",
+                              !createdDateFrom && "text-muted-foreground"
+                            )}
+                            disabled={createdDateFilterType !== "custom"}
+                          >
+                            <CalendarIcon className="ml-2 h-4 w-4" />
+                            {createdDateFrom ? format(createdDateFrom, "dd/MM/yyyy", { locale: ar }) : "من"}
+                          </Button>
+                        </PopoverTrigger>
+                        <PopoverContent className="w-auto p-0" align="start">
+                          <Calendar
+                            mode="single"
+                            selected={createdDateFrom}
+                            onSelect={setCreatedDateFrom}
+                            initialFocus
+                            className="pointer-events-auto"
+                          />
+                        </PopoverContent>
+                      </Popover>
                       <Select value={createdDateFilterType} onValueChange={setCreatedDateFilterType}>
                         <SelectTrigger className="w-24 bg-background">
                           <SelectValue placeholder="تخصيص" />
