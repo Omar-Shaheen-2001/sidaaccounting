@@ -608,7 +608,7 @@ const PaymentVoucher = () => {
                     </div>
 
                     <div className="flex items-center gap-3">
-                      <div className="flex flex-col">
+                      <div className="flex flex-col flex-1 min-w-0">
                         <div className="flex items-center gap-2">
                           <span className="font-medium text-primary">{voucher.amount.toFixed(2)} ₴</span>
                           {voucher.status === "draft" && (
@@ -618,7 +618,7 @@ const PaymentVoucher = () => {
                         <div className="flex items-center gap-2 text-sm text-muted-foreground">
                           <span>🏦 {voucher.cashBankAccount}</span>
                           <span>•</span>
-                          <span>{voucher.accounts.join(", ")}</span>
+                          <span className="truncate">{voucher.accounts.join(", ")}</span>
                         </div>
                         <span className="text-xs text-muted-foreground mt-1">
                           {getSourceLabel(voucher.source)} • أنشئ بواسطة: {voucher.createdBy}
@@ -627,7 +627,7 @@ const PaymentVoucher = () => {
                       
                       <DropdownMenu>
                         <DropdownMenuTrigger asChild>
-                          <Button variant="ghost" size="icon">
+                          <Button variant="ghost" size="icon" className="shrink-0">
                             <MoreHorizontal className="h-4 w-4" />
                           </Button>
                         </DropdownMenuTrigger>
