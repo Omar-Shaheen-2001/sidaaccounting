@@ -168,17 +168,18 @@ const PaymentVoucher = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background flex" dir="rtl">
+    <div className="min-h-screen bg-background" dir="rtl">
+      <TopBar
+        companyName="شركة النخبة للتجارة"
+        userName="أحمد محمد"
+        userRole="مدير النظام"
+        accountingPeriod="2025"
+        notificationCount={3}
+      />
+      
       <Sidebar />
-      <div className="flex-1">
-        <TopBar 
-          companyName="شركة النخبة للتجارة"
-          userName="أحمد محمد"
-          userRole="مدير النظام"
-          accountingPeriod="2025"
-          notificationCount={3}
-        />
-        <main className="p-6">
+      
+      <main className="mr-56 p-6 transition-all duration-300">
           {/* Header Actions */}
           <div className="flex items-center justify-between mb-6">
             <div className="flex items-center gap-2">
@@ -695,7 +696,6 @@ const PaymentVoucher = () => {
             </CardContent>
           </Card>
         </main>
-      </div>
     </div>
   );
 };
