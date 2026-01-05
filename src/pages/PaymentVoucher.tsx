@@ -540,9 +540,9 @@ const PaymentVoucher = () => {
               )}
 
               {/* Action Buttons */}
-              <div className="flex items-center gap-2 mt-4">
-                <Button variant="outline">إلغاء الفلتر</Button>
-                <Button className="bg-primary hover:bg-primary/90">بحث</Button>
+              <div className="flex items-center justify-end gap-3 mt-6 pt-4 border-t">
+                <Button variant="outline" className="min-w-24">إلغاء الفلتر</Button>
+                <Button className="bg-primary hover:bg-primary/90 min-w-24">بحث</Button>
               </div>
             </CardContent>
           </Card>
@@ -592,23 +592,13 @@ const PaymentVoucher = () => {
                 {vouchers.map((voucher) => (
                   <div
                     key={voucher.id}
-                    className={`flex items-center justify-between flex-row-reverse p-4 border rounded-lg hover:bg-muted/50 transition-colors ${
+                    className={`flex items-center justify-between p-4 border rounded-lg hover:bg-muted/50 transition-colors ${
                       voucher.status === "draft" ? "border-r-4 border-r-yellow-500" : ""
                     }`}
                   >
-                    <div className="flex items-center gap-4 flex-row-reverse">
-                      <Checkbox
-                        checked={selectedVouchers.includes(voucher.id)}
-                        onCheckedChange={(checked) => handleSelectVoucher(voucher.id, checked as boolean)}
-                      />
-                      <div className="text-right">
-                        <p className="font-medium">{voucher.voucherNumber} - {voucher.date}</p>
-                        <p className="text-sm text-muted-foreground">{voucher.description}</p>
-                      </div>
-                    </div>
-
-                    <div className="flex items-center gap-3">
-                      <div className="flex flex-col flex-1 min-w-0">
+                    {/* Right Side - Amount, Status, Details */}
+                    <div className="flex items-center gap-4">
+                      <div className="flex flex-col text-right">
                         <div className="flex items-center gap-2">
                           <span className="font-medium text-primary">{voucher.amount.toFixed(2)} ₴</span>
                           {voucher.status === "draft" && (
@@ -618,20 +608,23 @@ const PaymentVoucher = () => {
                         <div className="flex items-center gap-2 text-sm text-muted-foreground">
                           <span>🏦 {voucher.cashBankAccount}</span>
                           <span>•</span>
-                          <span className="truncate">{voucher.accounts.join(", ")}</span>
+                          <span className="truncate max-w-40">{voucher.accounts.join(", ")}</span>
                         </div>
                         <span className="text-xs text-muted-foreground mt-1">
                           {getSourceLabel(voucher.source)} • أنشئ بواسطة: {voucher.createdBy}
                         </span>
                       </div>
-                      
+                    </div>
+
+                    {/* Left Side - Voucher Number, Date, Checkbox, and 3 dots */}
+                    <div className="flex items-center gap-4">
                       <DropdownMenu>
                         <DropdownMenuTrigger asChild>
                           <Button variant="ghost" size="icon" className="shrink-0">
                             <MoreHorizontal className="h-4 w-4" />
                           </Button>
                         </DropdownMenuTrigger>
-                        <DropdownMenuContent align="end">
+                        <DropdownMenuContent align="start">
                           <DropdownMenuItem>
                             <Eye className="h-4 w-4 ml-2" />
                             عرض
@@ -664,6 +657,16 @@ const PaymentVoucher = () => {
                           </DropdownMenuItem>
                         </DropdownMenuContent>
                       </DropdownMenu>
+                      
+                      <div className="text-left">
+                        <p className="font-medium">{voucher.voucherNumber} - {voucher.date}</p>
+                        <p className="text-sm text-muted-foreground">{voucher.description}</p>
+                      </div>
+                      
+                      <Checkbox
+                        checked={selectedVouchers.includes(voucher.id)}
+                        onCheckedChange={(checked) => handleSelectVoucher(voucher.id, checked as boolean)}
+                      />
                     </div>
                   </div>
                 ))}
