@@ -272,7 +272,7 @@ const PaymentVoucher = () => {
               </div>
 
               {/* Basic Filters */}
-              <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
                 {/* Voucher Code */}
                 <div className="space-y-2">
                   <label className="text-sm font-medium text-right block">الكود</label>
@@ -280,21 +280,22 @@ const PaymentVoucher = () => {
                 </div>
 
                 {/* Date Filter */}
-                <div className="space-y-2">
+                <div className="space-y-2 md:col-span-2 lg:col-span-1">
                   <label className="text-sm font-medium text-right block">التاريخ</label>
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-1">
                     <Popover>
                       <PopoverTrigger asChild>
                         <Button
                           variant="outline"
+                          size="sm"
                           className={cn(
-                            "justify-start text-right font-normal flex-1",
+                            "justify-start text-right font-normal text-xs px-2",
                             !dateTo && "text-muted-foreground"
                           )}
                           disabled={dateFilterType !== "custom"}
                         >
-                          <CalendarIcon className="ml-2 h-4 w-4" />
-                          {dateTo ? format(dateTo, "dd/MM/yyyy", { locale: ar }) : "إلى"}
+                          <CalendarIcon className="ml-1 h-3 w-3" />
+                          {dateTo ? format(dateTo, "dd/MM/yy", { locale: ar }) : "إلى"}
                         </Button>
                       </PopoverTrigger>
                       <PopoverContent className="w-auto p-0" align="start">
@@ -307,19 +308,20 @@ const PaymentVoucher = () => {
                         />
                       </PopoverContent>
                     </Popover>
-                    <span className="text-muted-foreground">-</span>
+                    <span className="text-muted-foreground text-xs">-</span>
                     <Popover>
                       <PopoverTrigger asChild>
                         <Button
                           variant="outline"
+                          size="sm"
                           className={cn(
-                            "justify-start text-right font-normal flex-1",
+                            "justify-start text-right font-normal text-xs px-2",
                             !dateFrom && "text-muted-foreground"
                           )}
                           disabled={dateFilterType !== "custom"}
                         >
-                          <CalendarIcon className="ml-2 h-4 w-4" />
-                          {dateFrom ? format(dateFrom, "dd/MM/yyyy", { locale: ar }) : "من"}
+                          <CalendarIcon className="ml-1 h-3 w-3" />
+                          {dateFrom ? format(dateFrom, "dd/MM/yy", { locale: ar }) : "من"}
                         </Button>
                       </PopoverTrigger>
                       <PopoverContent className="w-auto p-0" align="start">
@@ -333,7 +335,7 @@ const PaymentVoucher = () => {
                       </PopoverContent>
                     </Popover>
                     <Select value={dateFilterType} onValueChange={setDateFilterType}>
-                      <SelectTrigger className="w-24 bg-background">
+                      <SelectTrigger className="w-20 bg-background h-8 text-xs">
                         <SelectValue placeholder="تخصيص" />
                       </SelectTrigger>
                       <SelectContent>
