@@ -55,8 +55,8 @@ export default function Login() {
           <div className="h-16 w-16 rounded-xl bg-gradient-to-br from-primary to-accent flex items-center justify-center mx-auto mb-4">
             <span className="text-primary-foreground font-bold text-2xl">S</span>
           </div>
-          <h1 className="text-2xl font-bold gradient-text">نظام صرح المحاسبي</h1>
-          <p className="text-muted-foreground text-sm mt-1">Sarh Accounting System</p>
+          <h1 className="text-2xl font-bold gradient-text">سيدا</h1>
+          <p className="text-muted-foreground text-sm mt-1">SIDA</p>
         </div>
 
         <Card className="border-border/50 shadow-xl">
@@ -149,7 +149,7 @@ export default function Login() {
 
         {/* Footer */}
         <p className="text-center text-xs text-muted-foreground mt-6">
-          © 2024 نظام صرح المحاسبي. جميع الحقوق محفوظة.
+          © 2024 سيدا SIDA. جميع الحقوق محفوظة.
         </p>
       </div>
     </div>
