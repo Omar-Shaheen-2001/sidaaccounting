@@ -11,6 +11,18 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { useTheme } from "next-themes";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useNavigate } from "react-router-dom";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 
 interface TopBarProps {
   companyName: string;
@@ -29,6 +41,11 @@ export function TopBar({
 }: TopBarProps) {
   const { theme, setTheme } = useTheme();
   const { language, setLanguage, t } = useLanguage();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    navigate("/login");
+  };
 
   return (
     <header className="glass-effect sticky top-0 z-50 border-b border-border/50 px-6 py-3">
@@ -140,10 +157,31 @@ export function TopBar({
                 {t("settings")}
               </DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem className="text-destructive focus:text-destructive">
-                <LogOut className="me-2 h-4 w-4" />
-                {t("logout")}
-              </DropdownMenuItem>
+              <AlertDialog>
+                <AlertDialogTrigger asChild>
+                  <DropdownMenuItem 
+                    className="text-destructive focus:text-destructive cursor-pointer"
+                    onSelect={(e) => e.preventDefault()}
+                  >
+                    <LogOut className="me-2 h-4 w-4" />
+                    {t("logout")}
+                  </DropdownMenuItem>
+                </AlertDialogTrigger>
+                <AlertDialogContent dir="rtl">
+                  <AlertDialogHeader>
+                    <AlertDialogTitle>تأكيد تسجيل الخروج</AlertDialogTitle>
+                    <AlertDialogDescription>
+                      هل أنت متأكد من رغبتك في تسجيل الخروج من النظام؟
+                    </AlertDialogDescription>
+                  </AlertDialogHeader>
+                  <AlertDialogFooter className="flex-row-reverse gap-2">
+                    <AlertDialogCancel>إلغاء</AlertDialogCancel>
+                    <AlertDialogAction onClick={handleLogout} className="bg-destructive text-destructive-foreground hover:bg-destructive/90">
+                      تسجيل الخروج
+                    </AlertDialogAction>
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialog>
             </DropdownMenuContent>
           </DropdownMenu>
         </div>

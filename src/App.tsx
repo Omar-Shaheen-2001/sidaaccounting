@@ -11,6 +11,7 @@ import AddJournalEntry from "./pages/AddJournalEntry";
 import EditLog from "./pages/EditLog";
 import PaymentVoucher from "./pages/PaymentVoucher";
 import ReceiptVoucher from "./pages/ReceiptVoucher";
+import Login from "./pages/Login";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -25,6 +26,7 @@ const App = () => (
           <BrowserRouter>
             <Routes>
               <Route path="/" element={<Index />} />
+              <Route path="/login" element={<Login />} />
               <Route path="/journal-entries" element={<JournalEntries />} />
               <Route path="/journal-entries/add" element={<AddJournalEntry />} />
               <Route path="/journal-entries/edit-log" element={<EditLog />} />
