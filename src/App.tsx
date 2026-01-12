@@ -11,6 +11,7 @@ import AddJournalEntry from "./pages/AddJournalEntry";
 import EditLog from "./pages/EditLog";
 import PaymentVoucher from "./pages/PaymentVoucher";
 import ReceiptVoucher from "./pages/ReceiptVoucher";
+import AddReceiptVoucher from "./pages/AddReceiptVoucher";
 import Login from "./pages/Login";
 import NotFound from "./pages/NotFound";
 
@@ -32,6 +33,7 @@ const App = () => (
               <Route path="/journal-entries/edit-log" element={<EditLog />} />
               <Route path="/payment-voucher" element={<PaymentVoucher />} />
               <Route path="/receipt-voucher" element={<ReceiptVoucher />} />
+              <Route path="/receipt-voucher/add" element={<AddReceiptVoucher />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>
