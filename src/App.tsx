@@ -12,6 +12,7 @@ import EditLog from "./pages/EditLog";
 import PaymentVoucher from "./pages/PaymentVoucher";
 import ReceiptVoucher from "./pages/ReceiptVoucher";
 import AddReceiptVoucher from "./pages/AddReceiptVoucher";
+import AssetManagement from "./pages/AssetManagement";
 import Login from "./pages/Login";
 import NotFound from "./pages/NotFound";
 
@@ -34,6 +35,7 @@ const App = () => (
               <Route path="/payment-voucher" element={<PaymentVoucher />} />
               <Route path="/receipt-voucher" element={<ReceiptVoucher />} />
               <Route path="/receipt-voucher/add" element={<AddReceiptVoucher />} />
+              <Route path="/asset-management" element={<AssetManagement />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>
