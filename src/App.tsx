@@ -14,6 +14,7 @@ import ReceiptVoucher from "./pages/ReceiptVoucher";
 import AddReceiptVoucher from "./pages/AddReceiptVoucher";
 import AssetManagement from "./pages/AssetManagement";
 import AddAsset from "./pages/AddAsset";
+import ChartOfAccounts from "./pages/ChartOfAccounts";
 import Login from "./pages/Login";
 import NotFound from "./pages/NotFound";
 
@@ -38,6 +39,7 @@ const App = () => (
               <Route path="/receipt-voucher/add" element={<AddReceiptVoucher />} />
               <Route path="/asset-management" element={<AssetManagement />} />
               <Route path="/asset-management/add" element={<AddAsset />} />
+              <Route path="/chart-of-accounts" element={<ChartOfAccounts />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>
