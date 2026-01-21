@@ -120,7 +120,7 @@ const ChartOfAccounts = () => {
   return (
     <div className="min-h-screen flex w-full bg-background">
       <Sidebar />
-      <div className="flex-1 flex flex-col">
+      <div className="flex-1 flex flex-col mr-56 transition-all duration-300">
         <TopBar
           companyName="شركة الأمل للتجارة"
           userName="محمد أحمد"
@@ -129,20 +129,20 @@ const ChartOfAccounts = () => {
           notificationCount={3}
         />
         
-        <main className="flex-1 p-6">
+        <main className="flex-1 p-4 md:p-6 overflow-x-hidden">
           {/* Page Header */}
-          <div className="flex items-center justify-between mb-6">
-            <h1 className="text-2xl font-bold text-foreground">دليل الحسابات</h1>
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6">
+            <h1 className="text-xl md:text-2xl font-bold text-foreground">دليل الحسابات</h1>
             
             {/* Action Bar */}
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 flex-wrap">
               <Button variant="outline" size="sm" className="gap-2">
                 <FileDown className="h-4 w-4" />
-                تصدير
+                <span className="hidden sm:inline">تصدير</span>
               </Button>
               <Button variant="outline" size="sm" className="gap-2">
                 <Printer className="h-4 w-4" />
-                طباعة
+                <span className="hidden sm:inline">طباعة</span>
               </Button>
               <Button 
                 variant="outline" 
@@ -151,7 +151,7 @@ const ChartOfAccounts = () => {
                 onClick={() => setShowFilters(!showFilters)}
               >
                 <Filter className="h-4 w-4" />
-                فلترة
+                <span className="hidden sm:inline">فلترة</span>
               </Button>
             </div>
           </div>
@@ -159,7 +159,7 @@ const ChartOfAccounts = () => {
           {/* Filters Section */}
           {showFilters && (
             <div className="bg-card border border-border rounded-lg p-4 mb-6">
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
                 <div className="space-y-2">
                   <label className="text-sm font-medium text-foreground">مستوى الحساب</label>
                   <Select value={accountLevel} onValueChange={setAccountLevel}>
@@ -216,7 +216,7 @@ const ChartOfAccounts = () => {
                 </div>
               </div>
 
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 flex-wrap">
                 <Button size="sm" className="gap-2">
                   عرض التقرير
                 </Button>
@@ -228,10 +228,10 @@ const ChartOfAccounts = () => {
             </div>
           )}
 
-          {/* Main Content */}
-          <div className="flex flex-row-reverse gap-6">
-            {/* Right Sidebar - Category Filter (appears on right in RTL) */}
-            <div className="w-64 bg-card border border-border rounded-lg p-4 h-fit">
+          {/* Main Content - Responsive Layout */}
+          <div className="flex flex-col-reverse lg:flex-row-reverse gap-4 md:gap-6">
+            {/* Right Sidebar - Category Filter */}
+            <div className="w-full lg:w-64 xl:w-72 bg-card border border-border rounded-lg p-4 h-fit flex-shrink-0">
               <div className="relative mb-4">
                 <Search className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                 <Input
@@ -242,7 +242,7 @@ const ChartOfAccounts = () => {
                 />
               </div>
 
-              <div className="space-y-2">
+              <div className="grid grid-cols-2 lg:grid-cols-1 gap-2">
                 {Object.entries(categoryLabels).map(([key, label]) => (
                   <button
                     key={key}
@@ -253,22 +253,22 @@ const ChartOfAccounts = () => {
                         : "hover:bg-muted text-foreground"
                     }`}
                   >
-                    <div className="w-4 h-4 rounded bg-[#1e3a5f]" />
-                    <span className="text-sm font-medium">{label}</span>
+                    <div className="w-4 h-4 rounded bg-[#1e3a5f] flex-shrink-0" />
+                    <span className="text-sm font-medium truncate">{label}</span>
                   </button>
                 ))}
               </div>
             </div>
 
             {/* Accounts List */}
-            <div className="flex-1 bg-card border border-border rounded-lg overflow-hidden">
+            <div className="flex-1 min-w-0 bg-card border border-border rounded-lg overflow-hidden">
               {/* Branch Selector Row */}
-              <div className="flex items-center justify-between p-4 border-b border-border bg-muted/30">
+              <div className="flex items-center justify-between p-3 md:p-4 border-b border-border bg-muted/30">
                 <ChevronDown className="h-4 w-4 text-muted-foreground" />
                 <div className="flex items-center gap-2">
-                  <span className="text-sm text-muted-foreground">فرع القيود</span>
+                  <span className="text-xs md:text-sm text-muted-foreground hidden sm:inline">فرع القيود</span>
                   <Select value={selectedBranch} onValueChange={setSelectedBranch}>
-                    <SelectTrigger className="w-[180px] bg-background">
+                    <SelectTrigger className="w-[140px] md:w-[180px] bg-background text-sm">
                       <SelectValue placeholder="اختر الفرع" />
                     </SelectTrigger>
                     <SelectContent className="bg-popover border border-border z-50">
@@ -290,10 +290,10 @@ const ChartOfAccounts = () => {
                   sortedAccounts.map((account) => (
                     <div
                       key={account.id}
-                      className="flex items-center justify-between p-4 hover:bg-muted/50 transition-colors cursor-pointer"
+                      className="flex items-center justify-between p-3 md:p-4 hover:bg-muted/50 transition-colors cursor-pointer gap-2"
                     >
                       {/* Left side - menu and balance */}
-                      <div className="flex items-center gap-4">
+                      <div className="flex items-center gap-2 md:gap-4 flex-shrink-0">
                         <DropdownMenu>
                           <DropdownMenuTrigger asChild>
                             <Button variant="ghost" size="icon" className="h-8 w-8">
@@ -308,26 +308,26 @@ const ChartOfAccounts = () => {
                         </DropdownMenu>
                         
                         <div className="text-left">
-                          <div className="font-semibold text-foreground">
+                          <div className="font-semibold text-foreground text-sm md:text-base">
                             {formatNumber(account.balance)}
                           </div>
-                          <div className="text-sm text-muted-foreground">
+                          <div className="text-xs md:text-sm text-muted-foreground">
                             {account.type}
                           </div>
                         </div>
                       </div>
 
                       {/* Right side - icon and name */}
-                      <div className="flex items-center gap-3">
-                        <div className="text-right">
-                          <div className="font-medium text-foreground">{account.name}</div>
-                          <div className="text-sm text-muted-foreground">{account.code}</div>
+                      <div className="flex items-center gap-2 md:gap-3 min-w-0">
+                        <div className="text-right min-w-0">
+                          <div className="font-medium text-foreground text-sm md:text-base truncate">{account.name}</div>
+                          <div className="text-xs md:text-sm text-muted-foreground">{account.code}</div>
                         </div>
                         <div 
-                          className="w-10 h-10 rounded flex items-center justify-center"
+                          className="w-8 h-8 md:w-10 md:h-10 rounded flex items-center justify-center flex-shrink-0"
                           style={{ backgroundColor: account.color }}
                         >
-                          <FolderOpen className="h-5 w-5 text-white" />
+                          <FolderOpen className="h-4 w-4 md:h-5 md:w-5 text-white" />
                         </div>
                       </div>
                     </div>
@@ -336,7 +336,7 @@ const ChartOfAccounts = () => {
               </div>
 
               {/* Add Account Button */}
-              <div className="p-4 border-t border-border">
+              <div className="p-3 md:p-4 border-t border-border">
                 <Button 
                   variant="ghost" 
                   className="w-full justify-center gap-2 text-primary hover:text-primary"
